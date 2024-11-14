@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
-import pefile
+"""Python script to pretty print exe/dll file section sizes, using pefile module. """
+
+# standard imports first
 import sys
 import os
 
+# custom module installed via: python3 -m pip install pefile
+import pefile
+
 
 def format_pretty_table(origdata, rjust=()) -> str:
+    """Format rows of data in origdata into a pretty printed ASCII table."""
     data = [None if row is None else tuple(map(str, row)) for row in origdata]
     colcount = max(map(len, (row for row in data if row is not None)))
     maxlens = colcount * [0]
@@ -30,6 +36,7 @@ def format_pretty_table(origdata, rjust=()) -> str:
 
 
 def pretty_filesize(fsize: int, padamount: int = 0) -> str:
+    """Return filesize formatted to as B, KiB, MiB or GiB count, optionally padded."""
     padding = padamount * " "
     if fsize < 1024:
         return f"{padding}{fsize} B{padding}"
@@ -41,10 +48,12 @@ def pretty_filesize(fsize: int, padamount: int = 0) -> str:
 
 
 def percentage(amount, base) -> str:
+    """Return amount/base as a pretty printed percentage."""
     return f"{amount * 100 / base:.1f}%"
 
 
 def main():
+    """Main function, for speed and to not run anything on import as module."""
     files = sys.argv[1:]
 
     if not files:

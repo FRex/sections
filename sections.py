@@ -48,7 +48,7 @@ def main():
     files = sys.argv[1:]
 
     if not files:
-        print("Pass in exe or dll files to analyze.")
+        print("Pass in exe or dll or other pefiles files to analyze.")
         print(pefile)
 
     for fname in files:
